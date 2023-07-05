@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../config/config.dart';
 
-typedef OnClickTypeAheadSuggestion = void Function(String)?;
-
 class CustomTextField extends StatefulWidget {
   final String labelText;
   final TextEditingController? controller;
