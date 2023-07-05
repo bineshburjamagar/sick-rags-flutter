@@ -5,6 +5,12 @@ import 'package:sick_rags_flutter/config/config.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});
+  static const String routeName = "/signuppage";
+  static Route route() {
+    return MaterialPageRoute(
+        settings: const RouteSettings(name: routeName),
+        builder: (_) => const SignUpPage());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +25,7 @@ class SignUpPage extends StatelessWidget {
                 width: double.infinity,
                 color: Colors.black,
                 padding: const EdgeInsets.only(
-                  top: 100,
+                  top: 80,
                 ),
                 child: const Center(
                   child: Text(
@@ -33,7 +39,7 @@ class SignUpPage extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(top: 200),
+                margin: const EdgeInsets.only(top: 180),
                 height: MediaQuery.of(context).size.height,
                 width: double.infinity,
                 decoration: const BoxDecoration(
@@ -49,28 +55,31 @@ class SignUpPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const Text(
-                      'Welcome Back !',
+                      'Create an account.',
                       style: TextStyle(
                           fontFamily: 'Caveat',
                           fontSize: 30.0,
                           fontWeight: FontWeight.w600),
                     ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'Don\'t have an account? ',
+                        const Text(
+                          'Already a member? ',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        Text(
-                          'Register',
-                          style: TextStyle(
-                            color: Colors.indigo,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
+                        InkWell(
+                          onTap: () => Navigator.pop(context),
+                          child: const Text(
+                            'Sign In',
+                            style: TextStyle(
+                              color: Colors.indigo,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         )
                       ],
@@ -88,8 +97,15 @@ class SignUpPage extends StatelessWidget {
                       isPassword: true,
                       isRequired: true,
                     ),
+                    const SizedBox(height: 20.0),
+                    const CustomTextField(
+                      labelText: 'Confirm Password',
+                      hintText: 'Re-enter your password',
+                      isPassword: true,
+                      isRequired: true,
+                    ),
                     const SizedBox(height: 80.0),
-                    CustomButton(onPressed: () {}, label: 'Sign In')
+                    CustomButton(onPressed: () {}, label: 'Sign Up')
                   ],
                 ),
               )

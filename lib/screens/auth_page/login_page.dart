@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sick_rags_flutter/components/custom_button.dart';
 import 'package:sick_rags_flutter/components/custom_text_field.dart';
 import 'package:sick_rags_flutter/config/config.dart';
+import 'package:sick_rags_flutter/screens/auth_page/signup_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -61,22 +62,26 @@ class LoginPage extends StatelessWidget {
                           fontSize: 30.0,
                           fontWeight: FontWeight.w600),
                     ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           'Don\'t have an account? ',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        Text(
-                          'Register',
-                          style: TextStyle(
-                            color: Colors.indigo,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
+                        InkWell(
+                          onTap: () => Navigator.pushNamed(
+                              context, SignUpPage.routeName),
+                          child: const Text(
+                            'Register',
+                            style: TextStyle(
+                              color: Colors.indigo,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         )
                       ],
