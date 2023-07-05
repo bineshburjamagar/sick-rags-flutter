@@ -14,7 +14,6 @@ class CustomTextField extends StatefulWidget {
   final bool isRequired;
   final EdgeInsets? contentPadding;
   final double? borderRadius;
-  final Color? titleColor;
 
   const CustomTextField({
     Key? key,
@@ -27,7 +26,6 @@ class CustomTextField extends StatefulWidget {
     this.isRequired = false,
     this.contentPadding,
     this.borderRadius,
-    this.titleColor,
   }) : super(key: key);
 
   @override
@@ -47,10 +45,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
             children: [
               Text(
                 widget.labelText,
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 12,
-                    color: widget.titleColor ?? Colors.grey),
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                  color: AppColors.greyColor,
+                ),
               ),
               widget.isRequired
                   ? const Text(
