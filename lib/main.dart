@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sick_rags_flutter/screens/splash_page.dart';
+import 'package:sick_rags_flutter/screens/auth_page/login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const SplashPage(),
+      home: const LoginPage(),
     );
   }
 }
