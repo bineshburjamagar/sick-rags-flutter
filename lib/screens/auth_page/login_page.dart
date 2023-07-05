@@ -17,6 +17,7 @@ class LoginPage extends StatelessWidget {
               'SICK RAGS',
               style: TextStyle(
                   fontSize: 18.0,
+                  fontFamily: 'Caveat',
                   fontWeight: FontWeight.w700,
                   color: Colors.white),
             ),
@@ -33,9 +34,38 @@ class LoginPage extends StatelessWidget {
             ),
             padding:
                 const EdgeInsets.symmetric(horizontal: 23.0, vertical: 20.0),
-            child: const Column(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('Welcome Back !'),
+                const Text(
+                  'Welcome Back !',
+                  style: TextStyle(
+                      fontFamily: 'Caveat',
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.w600),
+                ),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Don\'t have an account? ',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      'Register',
+                      style: TextStyle(
+                        color: Colors.indigo,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 100.0),
+                TextFormField()
               ],
             ),
           )
