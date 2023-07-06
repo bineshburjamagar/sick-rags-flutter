@@ -27,13 +27,23 @@ class HomePage extends StatelessWidget {
               backgroundColor: Colors.white,
               snap: true,
               floating: true,
-              leading: InkWell(
-                onTap: () => Scaffold.of(context).openDrawer(),
-                child: const Icon(
-                  Icons.menu_open_sharp,
-                  size: 30,
+              leading: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: Image.asset(
+                    AssetPath.appLogo,
+                    height: 20,
+                    width: 20,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
+              title: const Text(
+                'SICK RAGS',
+                style: TextStyle(fontSize: 24.0, fontFamily: 'Caveat'),
+              ),
+              centerTitle: true,
               actions: [
                 Badge(
                   alignment: Alignment.bottomLeft,
