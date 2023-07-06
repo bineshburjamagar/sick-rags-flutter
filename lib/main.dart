@@ -5,22 +5,23 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 import 'package:sick_rags_flutter/config/app_colors.dart';
 import 'package:sick_rags_flutter/config/app_route.dart';
-import 'package:sick_rags_flutter/core/providers/base_page_provider.dart';
-import 'package:sick_rags_flutter/core/providers/login_page_provider.dart';
-import 'package:sick_rags_flutter/core/providers/user_provider.dart';
+
 import 'package:sick_rags_flutter/screens/splash_page.dart';
 
-void main() {
+import 'core/providers/providers.dart';
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+  await Firebase.initializeApp();
 
   runApp(
     Phoenix(
       child: MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (_) => LoginPageProvider()),
           ChangeNotifierProvider(create: (_) => BasePageProvider()),
-          ChangeNotifierProvider(create: (_) => UserProvider()..getData())
+          ChangeNotifierProvider(create: (_) => UserProvider()..getData()),
+          ChangeNotifierProvider(
+              create: (_) => ProductsProvider()..getProductsData())
         ],
         child: const MyApp(),
       ),

@@ -4,7 +4,7 @@ import 'package:sick_rags_flutter/screens/auth_page/signup_page.dart';
 import 'package:sick_rags_flutter/screens/base_page.dart';
 import 'package:sick_rags_flutter/screens/nav_page/home_page.dart';
 import 'package:sick_rags_flutter/screens/nav_page/products_details_page.dart';
-import 'package:sick_rags_flutter/screens/shop_page/cart_page.dart';
+import 'package:sick_rags_flutter/screens/shop_page/shop_page.dart';
 import 'package:sick_rags_flutter/screens/splash_page.dart';
 
 class AppRoute {
@@ -24,6 +24,8 @@ class AppRoute {
         return ProductsDetailsPage.route();
       case CartPage.routeName:
         return CartPage.route();
+      case ProductsListPage.routeName:
+        return ProductsListPage.route();
 
       default:
         return MaterialPageRoute(

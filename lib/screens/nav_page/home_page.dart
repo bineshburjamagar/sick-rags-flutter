@@ -54,19 +54,23 @@ class HomePage extends StatelessWidget {
               height: 20.0,
             ),
           ),
-          const SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 23.0),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 23.0),
             sliver: SliverToBoxAdapter(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Recent Products',
                     style: TextStyle(fontSize: 24.0, fontFamily: 'Caveat'),
                   ),
-                  Text(
-                    'View All',
-                    style: TextStyle(fontSize: 18.0, fontFamily: 'Caveat'),
+                  InkWell(
+                    onTap: () => Navigator.pushNamed(
+                        context, ProductsListPage.routeName),
+                    child: const Text(
+                      'View All',
+                      style: TextStyle(fontSize: 18.0, fontFamily: 'Caveat'),
+                    ),
                   ),
                 ],
               ),
@@ -83,19 +87,23 @@ class HomePage extends StatelessWidget {
               height: 20.0,
             ),
           ),
-          const SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 23.0),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 23.0),
             sliver: SliverToBoxAdapter(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Popular Products',
                     style: TextStyle(fontSize: 24.0, fontFamily: 'Caveat'),
                   ),
-                  Text(
-                    'View All',
-                    style: TextStyle(fontSize: 18.0, fontFamily: 'Caveat'),
+                  InkWell(
+                    onTap: () => Navigator.pushNamed(
+                        context, ProductsListPage.routeName),
+                    child: const Text(
+                      'View All',
+                      style: TextStyle(fontSize: 18.0, fontFamily: 'Caveat'),
+                    ),
                   ),
                 ],
               ),
