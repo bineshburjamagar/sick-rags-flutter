@@ -12,6 +12,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<UserProvider>(builder: (context, userProv, child) {
       return Scaffold(
+        extendBody: true,
         appBar: AppBar(
           actions: [
             IconButton(
@@ -23,10 +24,10 @@ class ProfilePage extends StatelessWidget {
                 icon: const Icon(Icons.exit_to_app))
           ],
         ),
-        body: Column(
+        body: ListView(
           children: [
             Center(child: Text('${userProv.user?.displayName}')),
-            if (userProv.user?.email == 'binesh@gmail.com') const AdminWidget()
+            if (userProv.user?.email == 'binesh@gmail.com') AdminWidget()
           ],
         ),
       );

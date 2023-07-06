@@ -9,7 +9,8 @@ class ProductsProvider extends ChangeNotifier {
   List<ProductModel> recentProducts = [];
   FirebaseFirestore database = FirebaseFirestore.instance;
   getProductsData() async {
-    var productsModel = await database.collection('products').get();
+    var productsModel =
+        await database.collection('products').orderBy('id').get();
 
     for (var element in productsModel.docs) {
       productsList.add(

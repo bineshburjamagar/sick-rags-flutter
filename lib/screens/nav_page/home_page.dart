@@ -217,8 +217,11 @@ class HomePage extends StatelessWidget {
             );
           },
           itemBuilder: (context, index) {
-            return ClothesCardWidget(
-              model: recentProducts[index],
+            return SizedBox(
+              width: 180,
+              child: ClothesCardWidget(
+                model: recentProducts[index],
+              ),
             );
           },
           itemCount: recentProducts.length,

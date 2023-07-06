@@ -15,7 +15,8 @@ class CustomTextField extends StatefulWidget {
   final bool addSuffix;
   final void Function()? addSuffixOntap;
   final void Function(String?)? onSaved;
-
+  final int? maxLines;
+  final bool enable;
   const CustomTextField({
     Key? key,
     required this.labelText,
@@ -28,8 +29,10 @@ class CustomTextField extends StatefulWidget {
     this.contentPadding,
     this.borderRadius,
     this.addSuffix = false,
+    this.enable = true,
     this.onSaved,
     this.addSuffixOntap,
+    this.maxLines,
   }) : super(key: key);
 
   @override
@@ -68,6 +71,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           )
         ],
         TextFormField(
+          enabled: widget.enable,
           textAlign: TextAlign.start,
           keyboardType: widget.keyboardType,
           obscureText: (widget.isPassword) ? _showPassword : false,
@@ -81,6 +85,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               fontWeight: FontWeight.w500),
           textInputAction: TextInputAction.next,
           onSaved: widget.onSaved,
+          maxLines: widget.maxLines,
           decoration: InputDecoration(
             prefixStyle:
                 const TextStyle(color: AppColors.primaryColor, fontSize: 16),
