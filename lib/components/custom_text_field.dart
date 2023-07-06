@@ -12,6 +12,9 @@ class CustomTextField extends StatefulWidget {
   final bool isRequired;
   final EdgeInsets? contentPadding;
   final double? borderRadius;
+  final bool addSuffix;
+  final void Function()? addSuffixOntap;
+  final void Function(String?)? onSaved;
 
   const CustomTextField({
     Key? key,
@@ -24,6 +27,9 @@ class CustomTextField extends StatefulWidget {
     this.isRequired = false,
     this.contentPadding,
     this.borderRadius,
+    this.addSuffix = false,
+    this.onSaved,
+    this.addSuffixOntap,
   }) : super(key: key);
 
   @override
@@ -74,6 +80,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               fontSize: 14.0,
               fontWeight: FontWeight.w500),
           textInputAction: TextInputAction.next,
+          onSaved: widget.onSaved,
           decoration: InputDecoration(
             prefixStyle:
                 const TextStyle(color: AppColors.primaryColor, fontSize: 16),
@@ -120,7 +127,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
                             color: Colors.grey,
                           ),
                   )
-                : null),
+                : widget.addSuffix
+                    ? InkWell(
+                        onTap: widget.addSuffixOntap,
+                        child: const Icon(Icons.add),
+                      )
+                    : null),
             contentPadding: widget.contentPadding ??
                 const EdgeInsets.symmetric(
                   horizontal: 16.0,
