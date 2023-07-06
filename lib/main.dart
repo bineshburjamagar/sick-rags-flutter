@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sick_rags_flutter/config/app_route.dart';
-import 'package:sick_rags_flutter/screens/auth_page/login_page.dart';
+import 'package:sick_rags_flutter/core/providers/login_page_provider.dart';
 import 'package:sick_rags_flutter/screens/splash_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => LoginPageProvider())],
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -22,7 +25,7 @@ class MyApp extends StatelessWidget {
       initialRoute: SplashPage.routeName,
       onGenerateRoute: AppRoute.onGenerateRoute,
       debugShowCheckedModeBanner: false,
-      home: const LoginPage(),
+      home: const SplashPage(),
     );
   }
 }
