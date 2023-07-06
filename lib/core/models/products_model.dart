@@ -2,10 +2,10 @@ class ProductModel {
   final int id;
   final String? name;
   final int price;
-  final List<String> availableSize;
+  final List<dynamic> availableSize;
   final bool isPopular;
   final bool isRecent;
-  final List<String> images;
+  final List<dynamic> images;
 
   ProductModel({
     required this.id,

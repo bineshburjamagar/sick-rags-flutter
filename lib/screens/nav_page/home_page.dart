@@ -2,8 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sick_rags_flutter/core/providers/base_page_provider.dart';
+import 'package:sick_rags_flutter/core/providers/products_provider.dart';
 
 import '../../config/config.dart';
+import '../../core/models/models.dart';
 import '../../widgets/widgets.dart';
 import '../shop_page/shop_page.dart';
 
@@ -19,7 +21,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BasePageProvider>(builder: (context, baseProv, child) {
+    return Consumer2<BasePageProvider, ProductsProvider>(
+        builder: (context, baseProv, productProv, child) {
       return Scaffold(
         body: CustomScrollView(
           slivers: [
@@ -67,67 +70,75 @@ class HomePage extends StatelessWidget {
                 height: 20.0,
               ),
             ),
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 23.0),
-              sliver: SliverToBoxAdapter(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Recent Products',
-                      style: TextStyle(fontSize: 24.0, fontFamily: 'Caveat'),
-                    ),
-                    InkWell(
-                      onTap: () => Navigator.pushNamed(
-                          context, ProductsListPage.routeName),
-                      child: const Text(
-                        'View All',
-                        style: TextStyle(fontSize: 18.0, fontFamily: 'Caveat'),
+            if (productProv.recentProducts.isNotEmpty)
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 23.0),
+                sliver: SliverToBoxAdapter(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Recent Products',
+                        style: TextStyle(fontSize: 24.0, fontFamily: 'Caveat'),
                       ),
-                    ),
-                  ],
+                      InkWell(
+                        onTap: () => Navigator.pushNamed(
+                            context, ProductsListPage.routeName),
+                        child: const Text(
+                          'View All',
+                          style:
+                              TextStyle(fontSize: 18.0, fontFamily: 'Caveat'),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            const SliverToBoxAdapter(
-              child: SizedBox(
-                height: 10.0,
+            if (productProv.recentProducts.isNotEmpty)
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 10.0,
+                ),
               ),
-            ),
-            _recentProducts(),
+            if (productProv.recentProducts.isNotEmpty)
+              _recentProducts(recentProducts: productProv.recentProducts),
             const SliverToBoxAdapter(
               child: SizedBox(
                 height: 20.0,
               ),
             ),
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 23.0),
-              sliver: SliverToBoxAdapter(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Popular Products',
-                      style: TextStyle(fontSize: 24.0, fontFamily: 'Caveat'),
-                    ),
-                    InkWell(
-                      onTap: () => Navigator.pushNamed(
-                          context, ProductsListPage.routeName),
-                      child: const Text(
-                        'View All',
-                        style: TextStyle(fontSize: 18.0, fontFamily: 'Caveat'),
+            if (productProv.popularProducts.isNotEmpty)
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 23.0),
+                sliver: SliverToBoxAdapter(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Popular Products',
+                        style: TextStyle(fontSize: 24.0, fontFamily: 'Caveat'),
                       ),
-                    ),
-                  ],
+                      InkWell(
+                        onTap: () => Navigator.pushNamed(
+                            context, ProductsListPage.routeName),
+                        child: const Text(
+                          'View All',
+                          style:
+                              TextStyle(fontSize: 18.0, fontFamily: 'Caveat'),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            const SliverToBoxAdapter(
-              child: SizedBox(
-                height: 10.0,
+            if (productProv.popularProducts.isNotEmpty)
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 10.0,
+                ),
               ),
-            ),
-            _popularProducts(),
+            if (productProv.popularProducts.isNotEmpty)
+              _popularProducts(popularProducts: productProv.popularProducts),
           ],
         ),
       );
@@ -168,7 +179,8 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  SliverToBoxAdapter _popularProducts() {
+  SliverToBoxAdapter _popularProducts(
+      {required List<ProductModel> popularProducts}) {
     return SliverToBoxAdapter(
       child: GridView.builder(
         padding: const EdgeInsets.symmetric(horizontal: 23.0),
@@ -180,14 +192,18 @@ class HomePage extends StatelessWidget {
           crossAxisSpacing: 0.0,
         ),
         itemBuilder: (context, index) {
-          return const Center(child: ClothesCardWidget());
+          return Center(
+              child: ClothesCardWidget(
+            model: popularProducts[index],
+          ));
         },
-        itemCount: 10,
+        itemCount: popularProducts.length,
       ),
     );
   }
 
-  SliverToBoxAdapter _recentProducts() {
+  SliverToBoxAdapter _recentProducts(
+      {required List<ProductModel> recentProducts}) {
     return SliverToBoxAdapter(
       child: SizedBox(
         height: 250,
@@ -201,9 +217,11 @@ class HomePage extends StatelessWidget {
             );
           },
           itemBuilder: (context, index) {
-            return const ClothesCardWidget();
+            return ClothesCardWidget(
+              model: recentProducts[index],
+            );
           },
-          itemCount: 10,
+          itemCount: recentProducts.length,
         ),
       ),
     );

@@ -1,13 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sick_rags_flutter/config/assets_path.dart';
+import 'package:sick_rags_flutter/core/models/models.dart';
 import 'package:sick_rags_flutter/screens/nav_page/products_details_page.dart';
 
 class ClothesCardWidget extends StatelessWidget {
-  const ClothesCardWidget({
-    super.key,
-  });
-
+  const ClothesCardWidget({super.key, required this.model});
+  final ProductModel model;
   @override
   Widget build(BuildContext context) {
     return InkWell(

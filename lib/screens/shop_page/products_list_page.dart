@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sick_rags_flutter/core/providers/products_provider.dart';
+import 'package:sick_rags_flutter/widgets/clothes_card_widget.dart';
 
 class ProductsListPage extends StatelessWidget {
   const ProductsListPage({Key? key}) : super(key: key);
@@ -17,12 +18,26 @@ class ProductsListPage extends StatelessWidget {
       return Scaffold(
         appBar: AppBar(
           title: const Text(
-            'Products',
-            style: TextStyle(fontFamily: 'Caveat'),
+            'All Products',
+            style: TextStyle(fontFamily: 'Caveat', fontSize: 24.0),
           ),
           centerTitle: true,
         ),
-        body: Container(),
+        body: GridView.builder(
+          padding: const EdgeInsets.symmetric(horizontal: 23.0),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisExtent: 250,
+            mainAxisSpacing: 20,
+          ),
+          itemBuilder: (context, index) {
+            return Center(
+                child: ClothesCardWidget(
+              model: productProv.productsList[index],
+            ));
+          },
+          itemCount: 10,
+        ),
       );
     });
   }
