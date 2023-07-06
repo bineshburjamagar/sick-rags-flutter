@@ -20,6 +20,9 @@ class HomePage extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            backgroundColor: Colors.white,
+            snap: true,
+            floating: true,
             leading: InkWell(
               onTap: () => Scaffold.of(context).openDrawer(),
               child: const Icon(
@@ -77,15 +80,29 @@ class HomePage extends StatelessWidget {
           const SliverPadding(
             padding: EdgeInsets.symmetric(horizontal: 23.0),
             sliver: SliverToBoxAdapter(
-              child: Text(
-                'Recent Products',
-                style: TextStyle(fontSize: 24.0, fontFamily: 'Caveat'),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Recent Products',
+                    style: TextStyle(fontSize: 24.0, fontFamily: 'Caveat'),
+                  ),
+                  Text(
+                    'View All',
+                    style: TextStyle(fontSize: 18.0, fontFamily: 'Caveat'),
+                  ),
+                ],
               ),
+            ),
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 10.0,
             ),
           ),
           SliverToBoxAdapter(
             child: SizedBox(
-              height: 300,
+              height: 250,
               child: ListView.separated(
                 padding: const EdgeInsets.only(left: 23.0),
                 shrinkWrap: true,
@@ -101,7 +118,50 @@ class HomePage extends StatelessWidget {
                 itemCount: 10,
               ),
             ),
-          )
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 20.0,
+            ),
+          ),
+          const SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 23.0),
+            sliver: SliverToBoxAdapter(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Popular Products',
+                    style: TextStyle(fontSize: 24.0, fontFamily: 'Caveat'),
+                  ),
+                  Text(
+                    'View All',
+                    style: TextStyle(fontSize: 18.0, fontFamily: 'Caveat'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 10.0,
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: GridView.builder(
+              padding: const EdgeInsets.only(left: 23.0),
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisExtent: 260,
+              ),
+              itemBuilder: (context, index) {
+                return const ClothesCardWidget();
+              },
+              itemCount: 10,
+            ),
+          ),
         ],
       ),
     );
