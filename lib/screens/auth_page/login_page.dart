@@ -3,7 +3,7 @@ import 'package:sick_rags_flutter/components/custom_button.dart';
 import 'package:sick_rags_flutter/components/custom_text_field.dart';
 import 'package:sick_rags_flutter/config/config.dart';
 import 'package:sick_rags_flutter/screens/auth_page/signup_page.dart';
-import 'package:sick_rags_flutter/screens/nav_page/home_page.dart';
+import 'package:sick_rags_flutter/screens/base_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -129,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                       CustomButton(
                           onPressed: () {
                             Navigator.of(context).pushNamed(
-                              HomePage.routeName,
+                              BasePage.routeName,
                             );
                           },
                           label: 'Sign In')

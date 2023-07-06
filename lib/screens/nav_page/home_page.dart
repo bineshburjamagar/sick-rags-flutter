@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sick_rags_flutter/config/app_colors.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,7 +14,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const Drawer(),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -26,6 +26,20 @@ class HomePage extends StatelessWidget {
                 ),
               );
             }),
+            actions: [
+              Badge(
+                alignment: Alignment.bottomLeft,
+                label: const Text('1'),
+                backgroundColor: AppColors.primaryColor,
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.shopping_cart_checkout_sharp,
+                    size: 23,
+                  ),
+                ),
+              ),
+            ],
           )
         ],
       ),

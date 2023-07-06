@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sick_rags_flutter/screens/auth_page/login_page.dart';
 import 'package:sick_rags_flutter/screens/auth_page/signup_page.dart';
+import 'package:sick_rags_flutter/screens/base_page.dart';
 import 'package:sick_rags_flutter/screens/nav_page/home_page.dart';
 import 'package:sick_rags_flutter/screens/splash_page.dart';
 
@@ -15,6 +16,8 @@ class AppRoute {
         return SignUpPage.route();
       case HomePage.routeName:
         return HomePage.route();
+      case BasePage.routeName:
+        return BasePage.route();
 
       default:
         return MaterialPageRoute(
