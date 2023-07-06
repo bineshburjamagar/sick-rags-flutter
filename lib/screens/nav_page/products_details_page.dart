@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 
 import '../../config/config.dart';
@@ -143,6 +144,24 @@ class ProductsDetailsPage extends StatelessWidget {
             ),
           )
         ],
+      ),
+      bottomNavigationBar: InkWell(
+        onTap: () => BotToast.showText(text: 'Item added to cart'),
+        child: Container(
+          width: double.infinity,
+          height: 50,
+          padding: const EdgeInsets.all(10.0),
+          margin: const EdgeInsets.symmetric(horizontal: 23.0, vertical: 10.0),
+          decoration: BoxDecoration(
+              color: AppColors.primaryColor,
+              borderRadius: BorderRadius.circular(20.0)),
+          child: const Center(
+            child: Text(
+              'Add to Cart',
+              style: TextStyle(color: Colors.white, fontSize: 16.0),
+            ),
+          ),
+        ),
       ),
     );
   }

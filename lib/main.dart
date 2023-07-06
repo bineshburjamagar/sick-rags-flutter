@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sick_rags_flutter/config/app_colors.dart';
@@ -43,6 +44,8 @@ class MyApp extends StatelessWidget {
         })),
         useMaterial3: true,
       ),
+      builder: BotToastInit(),
+      navigatorObservers: [BotToastNavigatorObserver()],
       initialRoute: SplashPage.routeName,
       onGenerateRoute: AppRoute.onGenerateRoute,
       debugShowCheckedModeBanner: false,
