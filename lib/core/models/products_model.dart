@@ -6,26 +6,27 @@ class ProductModel {
   final bool isPopular;
   final bool isRecent;
   final List<dynamic> images;
+  final String? description;
 
-  ProductModel({
-    required this.id,
-    required this.name,
-    required this.price,
-    required this.availableSize,
-    required this.isPopular,
-    required this.isRecent,
-    required this.images,
-  });
+  ProductModel(
+      {required this.id,
+      required this.name,
+      required this.price,
+      required this.availableSize,
+      required this.isPopular,
+      required this.isRecent,
+      required this.images,
+      required this.description});
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
-        id: json["id"],
-        name: json["name"],
-        price: json["price"],
-        availableSize: List<String>.from(json["available_size"].map((x) => x)),
-        isPopular: json["is_popular"],
-        isRecent: json["is_recent"],
-        images: List<String>.from(json["images"].map((x) => x)),
-      );
+      id: json["id"],
+      name: json["name"],
+      price: json["price"],
+      availableSize: List<String>.from(json["available_size"].map((x) => x)),
+      isPopular: json["is_popular"],
+      isRecent: json["is_recent"],
+      images: List<String>.from(json["images"].map((x) => x)),
+      description: json["description"]);
 
   Map<String, dynamic> toJson() => {
         "id": id,

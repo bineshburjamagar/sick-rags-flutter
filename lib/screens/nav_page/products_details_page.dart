@@ -1,19 +1,23 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:sick_rags_flutter/core/models/models.dart';
 import 'package:sick_rags_flutter/screens/shop_page/cart_page.dart';
 
 import '../../config/config.dart';
 import '../../widgets/widgets.dart';
 
 class ProductsDetailsPage extends StatelessWidget {
-  const ProductsDetailsPage({Key? key}) : super(key: key);
+  const ProductsDetailsPage({Key? key, required this.model}) : super(key: key);
   static const String routeName = "/productsdetailspage";
-  static Route route() {
+  static Route route(ProductModel model) {
     return MaterialPageRoute(
         settings: const RouteSettings(name: routeName),
-        builder: (_) => const ProductsDetailsPage());
+        builder: (_) => ProductsDetailsPage(
+              model: model,
+            ));
   }
 
+  final ProductModel model;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,11 +59,8 @@ class ProductsDetailsPage extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.zero,
         children: [
-          const CustomCarouselSlider(
-            images: [
-              'https://scontent.fktm10-1.fna.fbcdn.net/v/t39.30808-6/318429622_637331288103259_9124934564493071457_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=hl51pbEEf3IAX94XdyV&_nc_ht=scontent.fktm10-1.fna&oh=00_AfA2xnmzNt3zhk3_uJ_AN6qugWQLuv7C1AiMpQg4KgINVw&oe=64AACC72',
-              'https://scontent.fktm10-1.fna.fbcdn.net/v/t39.30808-6/318201086_637331248103263_659258479615699600_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=xciKAjU4qsMAX-RE5_l&_nc_ht=scontent.fktm10-1.fna&oh=00_AfAibRpvwcP0WVKCAZJqu4zIcn1EJCGMTUGBuYqlmZWSxg&oe=64AC2F7C',
-            ],
+          CustomCarouselSlider(
+            images: model.images,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 23.0),
@@ -67,15 +68,16 @@ class ProductsDetailsPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20.0),
-                const Text(
-                  'Antim Grahan Hoodie',
-                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
+                Text(
+                  model.name ?? "",
+                  style: const TextStyle(
+                      fontSize: 20.0, fontWeight: FontWeight.w600),
                 ),
                 Row(
                   children: [
-                    const Text(
-                      'Rs 3000',
-                      style: TextStyle(
+                    Text(
+                      'Rs ${model.price}',
+                      style: const TextStyle(
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -110,22 +112,24 @@ class ProductsDetailsPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 10.0),
                 RichText(
-                  text: const TextSpan(
+                  text: TextSpan(
                       text: 'Size:   ',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'Lato',
                         color: AppColors.primaryColor,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
                       children: [
-                        TextSpan(
-                          text: 'XL',
-                          style: TextStyle(
-                            color: AppColors.greyColor,
-                            fontSize: 16.0,
-                          ),
-                        )
+                        ...List.generate(
+                            model.availableSize.length,
+                            (index) => TextSpan(
+                                  text: "${model.availableSize[index]},  ",
+                                  style: const TextStyle(
+                                    color: AppColors.greyColor,
+                                    fontSize: 16.0,
+                                  ),
+                                ))
                       ]),
                 ),
                 const SizedBox(height: 20.0),
@@ -137,9 +141,9 @@ class ProductsDetailsPage extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                const Text(
-                  'New limited edition NDIF merch will be available on todays show at Reggae bar ,thamel ...',
-                  style: TextStyle(
+                Text(
+                  model.description ?? '',
+                  style: const TextStyle(
                     color: AppColors.primaryColor,
                   ),
                 )

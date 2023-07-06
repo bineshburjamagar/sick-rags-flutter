@@ -21,6 +21,7 @@ class ProductsProvider extends ChangeNotifier {
           isPopular: element.data()['is_popular'],
           isRecent: element.data()['is_recent'],
           images: element.data()['images'],
+          description: element.data()['description'],
         ),
       );
 

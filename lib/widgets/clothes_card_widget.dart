@@ -10,7 +10,8 @@ class ClothesCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, ProductsDetailsPage.routeName),
+      onTap: () => Navigator.pushNamed(context, ProductsDetailsPage.routeName,
+          arguments: model),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sick_rags_flutter/core/models/models.dart';
 import 'package:sick_rags_flutter/screens/auth_page/login_page.dart';
 import 'package:sick_rags_flutter/screens/auth_page/signup_page.dart';
 import 'package:sick_rags_flutter/screens/base_page.dart';
@@ -21,7 +22,8 @@ class AppRoute {
       case BasePage.routeName:
         return BasePage.route();
       case ProductsDetailsPage.routeName:
-        return ProductsDetailsPage.route();
+        ProductModel model = settings.arguments as ProductModel;
+        return ProductsDetailsPage.route(model);
       case CartPage.routeName:
         return CartPage.route();
       case ProductsListPage.routeName:
