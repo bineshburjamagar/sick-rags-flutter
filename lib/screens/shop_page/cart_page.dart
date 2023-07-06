@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sick_rags_flutter/components/custom_button.dart';
+import 'package:sick_rags_flutter/config/config.dart';
 
 import '../../widgets/widgets.dart';
 
@@ -40,7 +42,53 @@ class CartPage extends StatelessWidget {
               }, childCount: 2),
             ),
           ),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 23.0),
+            sliver: SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      ...List.generate(
+                        50,
+                        (index) => const Expanded(
+                            child: Text(
+                          '-',
+                          style: TextStyle(color: Colors.grey),
+                        )),
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 20.0),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'TOTAL',
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.greyColor,
+                        ),
+                      ),
+                      Text(
+                        'Rs 90000',
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
         ],
+      ),
+      bottomNavigationBar: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 23.0, vertical: 20.0),
+        child: CustomButton(onPressed: () {}, label: 'Checkout'),
       ),
     );
   }
