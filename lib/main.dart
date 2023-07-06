@@ -18,7 +18,8 @@ void main() async {
     Phoenix(
       child: MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (_) => BasePageProvider()),
+          ChangeNotifierProvider(
+              create: (_) => BasePageProvider()..getBanners()),
           ChangeNotifierProvider(create: (_) => UserProvider()..getData()),
           ChangeNotifierProvider(
               create: (_) => ProductsProvider()..getProductsData())

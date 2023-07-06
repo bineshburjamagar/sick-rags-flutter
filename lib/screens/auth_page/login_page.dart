@@ -145,7 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                               if (_formKey.currentState!.validate()) {
                                 try {
                                   BotToast.showLoading();
-                                  var cred = await FirebaseAuth.instance
+                                  await FirebaseAuth.instance
                                       .signInWithEmailAndPassword(
                                           email: _emailController.text,
                                           password: _passwordController.text);
