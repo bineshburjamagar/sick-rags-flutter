@@ -167,12 +167,14 @@ class _SignUpPageState extends State<SignUpPage> {
                                     user.updateDisplayName(
                                         _fullNameController.text);
                                   }
+                                  BotToast.closeAllLoading();
                                   BotToast.showText(
                                       text: 'Successfully user created!',
                                       contentColor: Colors.red);
                                   Navigator.pushNamed(
                                       context, BasePage.routeName);
                                 } on FirebaseAuthException catch (e) {
+                                  BotToast.closeAllLoading();
                                   if (e.code == 'weak-password') {
                                     BotToast.showText(
                                         text: e.code, contentColor: Colors.red);
@@ -181,6 +183,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                         text: e.code, contentColor: Colors.red);
                                   }
                                 } catch (e) {
+                                  BotToast.closeAllLoading();
                                   BotToast.showText(
                                       text: '$e', contentColor: Colors.red);
                                 }
