@@ -188,7 +188,7 @@ class HomePage extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          mainAxisExtent: 260,
+          mainAxisExtent: 280,
           crossAxisSpacing: 0.0,
         ),
         itemBuilder: (context, index) {
@@ -206,7 +206,7 @@ class HomePage extends StatelessWidget {
       {required List<ProductModel> recentProducts}) {
     return SliverToBoxAdapter(
       child: SizedBox(
-        height: 250,
+        height: 280,
         child: ListView.separated(
           padding: const EdgeInsets.only(left: 23.0),
           shrinkWrap: true,

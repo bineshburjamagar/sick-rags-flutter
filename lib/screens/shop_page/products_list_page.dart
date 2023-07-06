@@ -27,7 +27,7 @@ class ProductsListPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 23.0),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            mainAxisExtent: 250,
+            mainAxisExtent: 280,
             mainAxisSpacing: 20,
           ),
           itemBuilder: (context, index) {
@@ -36,7 +36,7 @@ class ProductsListPage extends StatelessWidget {
               model: productProv.productsList[index],
             ));
           },
-          itemCount: 10,
+          itemCount: productProv.productsList.length,
         ),
       );
     });
