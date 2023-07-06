@@ -3,6 +3,7 @@ import 'package:sick_rags_flutter/config/app_colors.dart';
 import 'package:sick_rags_flutter/config/assets_path.dart';
 
 import '../../widgets/widgets.dart';
+import '../shop_page/shop_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -36,7 +37,9 @@ class HomePage extends StatelessWidget {
                 label: const Text('1'),
                 backgroundColor: AppColors.primaryColor,
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(CartPage.routeName);
+                  },
                   icon: const Icon(
                     Icons.shopping_cart_checkout_sharp,
                     size: 23,

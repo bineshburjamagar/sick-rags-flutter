@@ -1,5 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:sick_rags_flutter/screens/shop_page/cart_page.dart';
 
 import '../../config/config.dart';
 import '../../widgets/widgets.dart';
@@ -39,7 +40,9 @@ class ProductsDetailsPage extends StatelessWidget {
             label: const Text('1'),
             backgroundColor: AppColors.primaryColor,
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(CartPage.routeName);
+              },
               icon: const Icon(
                 Icons.shopping_cart_checkout_sharp,
                 color: AppColors.primaryColor,
