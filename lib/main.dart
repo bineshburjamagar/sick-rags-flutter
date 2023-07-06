@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Lato',
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
+        appBarTheme: const AppBarTheme(color: Colors.white),
         navigationBarTheme: NavigationBarThemeData(
             iconTheme: MaterialStateProperty.resolveWith((states) {
           if (states.contains(MaterialState.selected)) {
