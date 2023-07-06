@@ -1,4 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sick_rags_flutter/config/app_colors.dart';
@@ -8,6 +9,9 @@ import 'package:sick_rags_flutter/core/providers/login_page_provider.dart';
 import 'package:sick_rags_flutter/screens/splash_page.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
+
   runApp(
     MultiProvider(
       providers: [
