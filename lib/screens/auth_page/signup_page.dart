@@ -170,7 +170,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   BotToast.closeAllLoading();
                                   BotToast.showText(
                                       text: 'Successfully user created!',
-                                      contentColor: Colors.red);
+                                      contentColor: Colors.green);
                                   Navigator.pushNamed(
                                       context, BasePage.routeName);
                                 } on FirebaseAuthException catch (e) {

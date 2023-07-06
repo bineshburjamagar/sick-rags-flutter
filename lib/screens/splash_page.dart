@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sick_rags_flutter/config/config.dart';
-import 'package:sick_rags_flutter/screens/auth_page/login_page.dart';
+import 'package:sick_rags_flutter/screens/base_page.dart';
+
+import 'auth_page/auth_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -23,13 +26,22 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   void initializePage() {
-    Future.delayed(
-      const Duration(seconds: 2),
-    ).whenComplete(
-      () => Navigator.pushReplacementNamed(
-        context,
-        LoginPage.routeName,
-      ),
+    Future(() {
+      return FirebaseAuth.instance.currentUser != null;
+    }).then(
+      (value) {
+        if (value) {
+          Navigator.pushReplacementNamed(
+            context,
+            BasePage.routeName,
+          );
+        } else {
+          Navigator.pushReplacementNamed(
+            context,
+            LoginPage.routeName,
+          );
+        }
+      },
     );
   }
 

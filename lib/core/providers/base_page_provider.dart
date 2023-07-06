@@ -6,8 +6,8 @@ class BasePageProvider extends ChangeNotifier {
   int initialIndex = 0;
   List<Widget> screen = [
     const HomePage(),
+    const Text('data'),
     const ProfilePage(),
-    const Text('data')
   ];
 
   changeIndex(int index) {
