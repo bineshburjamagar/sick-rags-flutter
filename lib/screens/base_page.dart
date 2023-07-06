@@ -40,14 +40,14 @@ class BasePage extends StatelessWidget {
                     label: 'Home'),
                 NavigationDestination(
                     icon: Icon(
-                      Icons.home_rounded,
+                      Icons.table_chart_rounded,
                     ),
-                    label: 'Home'),
+                    label: 'Orders'),
                 NavigationDestination(
                     icon: Icon(
-                      Icons.home_rounded,
+                      Icons.person_2_rounded,
                     ),
-                    label: 'Home'),
+                    label: 'Profile'),
               ],
             ),
           ),
