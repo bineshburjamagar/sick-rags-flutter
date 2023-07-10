@@ -38,7 +38,7 @@ class ProductsProvider extends ChangeNotifier {
     final QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
         .instance
         .collection('cart')
-        .where('id', isEqualTo: productId)
+        .where('productId', isEqualTo: productId)
         .limit(1)
         .get();
 

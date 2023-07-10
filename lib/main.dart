@@ -5,7 +5,6 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 import 'package:sick_rags_flutter/config/app_colors.dart';
 import 'package:sick_rags_flutter/config/app_route.dart';
-import 'package:sick_rags_flutter/core/providers/admin_provider.dart';
 
 import 'package:sick_rags_flutter/screens/splash_page.dart';
 
@@ -24,7 +23,8 @@ void main() async {
           ChangeNotifierProvider(create: (_) => UserProvider()..getData()),
           ChangeNotifierProvider(
               create: (_) => ProductsProvider()..getProductsData()),
-          ChangeNotifierProvider(create: (_) => AdminProvider())
+          ChangeNotifierProvider(create: (_) => AdminProvider()),
+          ChangeNotifierProvider(create: (_) => CartProvider()),
         ],
         child: const MyApp(),
       ),

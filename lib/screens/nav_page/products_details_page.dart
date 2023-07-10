@@ -166,7 +166,9 @@ class ProductsDetailsPage extends StatelessWidget {
                   text: 'Already on cart', contentColor: Colors.red);
             } else {
               BotToast.closeAllLoading();
-              FirebaseFirestore.instance.collection('cart').add(model.toJson());
+              FirebaseFirestore.instance
+                  .collection('cart')
+                  .add({'productId': model.id, 'quantity': 1});
               BotToast.showText(
                   text: 'Item added to cart', contentColor: Colors.green);
             }
