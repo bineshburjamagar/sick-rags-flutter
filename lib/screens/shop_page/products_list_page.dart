@@ -24,6 +24,7 @@ class ProductsListPage extends StatelessWidget {
           centerTitle: true,
         ),
         body: GridView.builder(
+          physics: const AlwaysScrollableScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 23.0),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,

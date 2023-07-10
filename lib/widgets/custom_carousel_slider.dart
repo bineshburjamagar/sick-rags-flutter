@@ -22,14 +22,26 @@ class _CustomCarouselSliderState extends State<CustomCarouselSlider> {
           items: [
             ...List.generate(
               widget.images.length,
-              (index) => CachedNetworkImage(
-                height: 350,
-                width: double.infinity,
-                fit: BoxFit.cover,
-                imageUrl: widget.images[index],
-                errorWidget: (context, url, error) =>
-                    Image.asset(AssetPath.appLogo),
-              ),
+              (index) => index == 0
+                  ? Hero(
+                      tag: 'Hero$index',
+                      child: CachedNetworkImage(
+                        height: 350,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                        imageUrl: widget.images[index],
+                        errorWidget: (context, url, error) =>
+                            Image.asset(AssetPath.appLogo),
+                      ),
+                    )
+                  : CachedNetworkImage(
+                      height: 350,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                      imageUrl: widget.images[index],
+                      errorWidget: (context, url, error) =>
+                          Image.asset(AssetPath.appLogo),
+                    ),
             )
           ],
           options: CarouselOptions(

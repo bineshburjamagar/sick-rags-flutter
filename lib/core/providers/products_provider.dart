@@ -33,4 +33,15 @@ class ProductsProvider extends ChangeNotifier {
     recentProducts = productsList.where((element) => element.isRecent).toList();
     notifyListeners();
   }
+
+  Future<bool> checkProductExists(int productId) async {
+    final QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+        .instance
+        .collection('cart')
+        .where('id', isEqualTo: productId)
+        .limit(1)
+        .get();
+
+    return snapshot.size > 0;
+  }
 }

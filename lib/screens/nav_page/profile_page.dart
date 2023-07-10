@@ -25,8 +25,13 @@ class ProfilePage extends StatelessWidget {
           ],
         ),
         body: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 23.0),
           children: [
-            Center(child: Text('${userProv.user?.displayName}')),
+            Text(
+              'Hello, \n${userProv.user?.displayName}',
+              style: const TextStyle(fontSize: 28.0, fontFamily: 'Caveat'),
+            ),
+            const SizedBox(height: 50.0),
             if (userProv.user?.email == 'binesh@gmail.com') AdminWidget()
           ],
         ),

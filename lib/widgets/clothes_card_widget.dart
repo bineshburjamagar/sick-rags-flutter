@@ -17,13 +17,18 @@ class ClothesCardWidget extends StatelessWidget {
         children: [
           ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
-              child: CachedNetworkImage(
-                height: 200,
-                width: 150,
-                fit: BoxFit.cover,
-                errorWidget: (context, url, error) =>
-                    Image.asset(AssetPath.appLogo),
-                imageUrl: model.images.firstOrNull,
+              child: Hero(
+                tag: 'Hero0',
+                child: CachedNetworkImage(
+                  height: 200,
+                  width: 150,
+                  fit: BoxFit.cover,
+                  errorWidget: (context, url, error) => Image.asset(
+                    AssetPath.appLogo,
+                    fit: BoxFit.cover,
+                  ),
+                  imageUrl: model.images.firstOrNull,
+                ),
               )),
           const SizedBox(
             height: 10.0,
