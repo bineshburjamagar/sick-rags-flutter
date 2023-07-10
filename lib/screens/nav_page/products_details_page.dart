@@ -153,7 +153,7 @@ class ProductsDetailsPage extends StatelessWidget {
               FirebaseFirestore.instance
                   .collection('cart')
                   .add({'productId': model.id, 'quantity': 1});
-              cartProv.getCartList();
+              await cartProv.getCartList();
 
               BotToast.showText(
                   text: 'Item added to cart', contentColor: Colors.green);

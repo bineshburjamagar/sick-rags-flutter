@@ -6,6 +6,7 @@ class CartProvider extends ChangeNotifier {
   List<CartModel> cartList = [];
 
   getCartList() async {
+    cartList.clear();
     var data = await FirebaseFirestore.instance.collection('cart').get();
     for (var element in data.docs) {
       cartList.add(
@@ -14,7 +15,7 @@ class CartProvider extends ChangeNotifier {
           quantity: element.data()['quantity'],
         ),
       );
-      notifyListeners();
     }
+    notifyListeners();
   }
 }

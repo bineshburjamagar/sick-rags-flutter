@@ -1,13 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:sick_rags_flutter/core/models/models.dart';
 
 import '../config/config.dart';
 
 class CartProductCard extends StatelessWidget {
-  const CartProductCard({
-    super.key,
-  });
-
+  const CartProductCard(
+      {super.key, required this.productModel, required this.quantity});
+  final ProductModel productModel;
+  final int quantity;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,8 +23,7 @@ class CartProductCard extends StatelessWidget {
               height: 150,
               width: 120,
               fit: BoxFit.cover,
-              imageUrl:
-                  'https://scontent.fktm10-1.fna.fbcdn.net/v/t39.30808-6/318201086_637331248103263_659258479615699600_n.jpg?stp=dst-jpg_s600x600&_nc_cat=106&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=xciKAjU4qsMAX-RE5_l&_nc_ht=scontent.fktm10-1.fna&oh=00_AfDQGGlioyg7_TZTly17s9aujL1Am_ZBd_pGP5HFGDgaJA&oe=64AC2F7C',
+              imageUrl: productModel.images.firstOrNull,
               errorWidget: (context, url, error) =>
                   Image.asset(AssetPath.appLogo),
             ),
@@ -35,24 +35,24 @@ class CartProductCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Data sdfhsodihfd oih ergewrg wtrwetr ewwet ewte',
-                    style: TextStyle(
+                  Text(
+                    productModel.name ?? '',
+                    style: const TextStyle(
                       fontSize: 15.0,
                       fontWeight: FontWeight.w600,
                     ),
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const Text(
-                    'Size: XL',
-                    style: TextStyle(
+                  Text(
+                    'Size: ${productModel.availableSize}',
+                    style: const TextStyle(
                       color: AppColors.greyColor,
                     ),
                   ),
-                  const Text(
-                    'Rs 1000',
-                    style: TextStyle(
+                  Text(
+                    'Rs ${productModel.price}',
+                    style: const TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w600,
                     ),
@@ -74,9 +74,9 @@ class CartProductCard extends StatelessWidget {
                       const SizedBox(
                         width: 10.0,
                       ),
-                      const Text(
-                        '1',
-                        style: TextStyle(
+                      Text(
+                        '$quantity',
+                        style: const TextStyle(
                           fontSize: 15.0,
                           fontWeight: FontWeight.w600,
                         ),
