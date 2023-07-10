@@ -43,6 +43,7 @@ class CartPage extends StatelessWidget {
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate((context, index) {
                   return CartProductCard(
+                      docId: cartProv.cartList[index].docId,
                       quantity: cartProv.cartList[index].quantity,
                       productModel: prodProv.productsList
                           .where((element) =>

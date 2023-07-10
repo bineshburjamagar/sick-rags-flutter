@@ -11,6 +11,7 @@ class CartProvider extends ChangeNotifier {
     for (var element in data.docs) {
       cartList.add(
         CartModel(
+          docId: element.id,
           productId: element.data()['productId'],
           quantity: element.data()['quantity'],
           price: element.data()['price'],
@@ -30,5 +31,13 @@ class CartProvider extends ChangeNotifier {
     }
 
     return total;
+  }
+
+  increaseQuantity(int q) {
+    return q++;
+  }
+
+  decreaseQuantity(int q) {
+    return q > 1 ? q-- : 1;
   }
 }
