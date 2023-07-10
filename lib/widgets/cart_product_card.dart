@@ -44,16 +44,11 @@ class CartProductCard extends StatelessWidget {
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  Text(
-                    'Size: ${productModel.availableSize}',
-                    style: const TextStyle(
-                      color: AppColors.greyColor,
-                    ),
-                  ),
+                  const SizedBox(height: 10.0),
                   Text(
                     'Rs ${productModel.price}',
                     style: const TextStyle(
-                      fontSize: 14.0,
+                      fontSize: 16.0,
                       fontWeight: FontWeight.w600,
                     ),
                   ),

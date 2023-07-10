@@ -69,10 +69,10 @@ class CartPage extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 20.0),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'TOTAL',
                           style: TextStyle(
                             fontSize: 15.0,
@@ -81,8 +81,8 @@ class CartPage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Rs 90000',
-                          style: TextStyle(
+                          'Rs ${cartProv.getTotalPrice(cartProv.cartList)}',
+                          style: const TextStyle(
                             fontSize: 15.0,
                             fontWeight: FontWeight.w600,
                           ),

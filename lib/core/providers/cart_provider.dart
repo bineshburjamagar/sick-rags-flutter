@@ -13,9 +13,22 @@ class CartProvider extends ChangeNotifier {
         CartModel(
           productId: element.data()['productId'],
           quantity: element.data()['quantity'],
+          price: element.data()['price'],
         ),
       );
     }
+    getTotalPrice(cartList);
+
     notifyListeners();
+  }
+
+  getTotalPrice(List<CartModel> cartList) {
+    double total = 0.0;
+
+    for (var product in cartList) {
+      total += product.quantity * product.price;
+    }
+
+    return total;
   }
 }
