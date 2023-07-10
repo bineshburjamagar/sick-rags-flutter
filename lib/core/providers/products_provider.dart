@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ class ProductsProvider extends ChangeNotifier {
   List<ProductModel> recentProducts = [];
   FirebaseFirestore database = FirebaseFirestore.instance;
   getProductsData() async {
+    BotToast.showLoading();
     var productsModel =
         await database.collection('products').orderBy('id').get();
 
@@ -31,6 +33,7 @@ class ProductsProvider extends ChangeNotifier {
     popularProducts =
         productsList.where((element) => element.isPopular).toList();
     recentProducts = productsList.where((element) => element.isRecent).toList();
+    BotToast.closeAllLoading();
     notifyListeners();
   }
 

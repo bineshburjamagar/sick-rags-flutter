@@ -85,7 +85,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               fontWeight: FontWeight.w500),
           textInputAction: TextInputAction.next,
           onSaved: widget.onSaved,
-          maxLines: widget.maxLines,
+          maxLines: widget.maxLines ?? 1,
           decoration: InputDecoration(
             prefixStyle:
                 const TextStyle(color: AppColors.primaryColor, fontSize: 16),

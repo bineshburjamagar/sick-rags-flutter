@@ -25,6 +25,7 @@ void main() async {
               create: (_) => ProductsProvider()..getProductsData()),
           ChangeNotifierProvider(create: (_) => AdminProvider()),
           ChangeNotifierProvider(create: (_) => CartProvider()..getCartList()),
+          ChangeNotifierProvider(create: (_) => OrdersProvider()..getOrders())
         ],
         child: const MyApp(),
       ),

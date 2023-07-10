@@ -19,8 +19,8 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<ProductsProvider, CartProvider>(
-        builder: (context, prodProv, cartProv, child) {
+    return Consumer3<ProductsProvider, CartProvider, OrdersProvider>(
+        builder: (context, prodProv, cartProv, orderProv, child) {
       return Scaffold(
         body: CustomScrollView(
           slivers: [
@@ -127,6 +127,7 @@ class CartPage extends StatelessWidget {
                       });
                       await cartProv.deleteAllCart();
                       await cartProv.getCartList();
+                      await orderProv.getOrders();
                     },
                     label: 'Checkout'),
               )
