@@ -2,8 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:sick_rags_flutter/screens/nav_page/home_page.dart';
-import 'package:sick_rags_flutter/screens/nav_page/profile_page.dart';
+import 'package:sick_rags_flutter/screens/nav_page/nav_page.dart';
 
 class BasePageProvider extends ChangeNotifier {
   int initialIndex = 0;
@@ -11,7 +10,7 @@ class BasePageProvider extends ChangeNotifier {
   FirebaseFirestore database = FirebaseFirestore.instance;
   List<Widget> screen = [
     const HomePage(),
-    const Text('data'),
+    const OrdersPage(),
     const ProfilePage(),
   ];
 

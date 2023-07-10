@@ -14,6 +14,11 @@ class ProfilePage extends StatelessWidget {
       return Scaffold(
         extendBody: true,
         appBar: AppBar(
+          leading: const Text(''),
+          title: const Text(
+            'My Profile',
+            style: TextStyle(fontSize: 24.0, fontFamily: 'Caveat'),
+          ),
           actions: [
             IconButton(
                 onPressed: () async {

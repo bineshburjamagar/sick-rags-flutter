@@ -38,7 +38,7 @@ class ClothesCardWidget extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              model.heroTag ?? "",
+              model.name ?? "",
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
