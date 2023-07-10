@@ -47,21 +47,8 @@ class HomePage extends StatelessWidget {
                 style: TextStyle(fontSize: 24.0, fontFamily: 'Caveat'),
               ),
               centerTitle: true,
-              actions: [
-                Badge(
-                  alignment: Alignment.bottomLeft,
-                  label: const Text('1'),
-                  backgroundColor: AppColors.primaryColor,
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(CartPage.routeName);
-                    },
-                    icon: const Icon(
-                      Icons.shopping_cart_checkout_sharp,
-                      size: 23,
-                    ),
-                  ),
-                ),
+              actions: const [
+                CartWidget(),
               ],
             ),
             _bannersAndTitle(banner: baseProv.banner ?? ''),

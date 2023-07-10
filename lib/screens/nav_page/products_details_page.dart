@@ -3,8 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sick_rags_flutter/core/models/models.dart';
-import 'package:sick_rags_flutter/core/providers/products_provider.dart';
-import 'package:sick_rags_flutter/screens/shop_page/cart_page.dart';
+import 'package:sick_rags_flutter/core/providers/providers.dart';
 
 import '../../config/config.dart';
 import '../../widgets/widgets.dart';
@@ -23,7 +22,8 @@ class ProductsDetailsPage extends StatelessWidget {
   final ProductModel model;
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProductsProvider>(builder: (context, prodProv, child) {
+    return Consumer2<ProductsProvider, CartProvider>(
+        builder: (context, prodProv, cartProv, child) {
       return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -42,23 +42,7 @@ class ProductsDetailsPage extends StatelessWidget {
               ),
             ),
           ),
-          actions: [
-            Badge(
-              alignment: Alignment.bottomLeft,
-              label: const Text('1'),
-              backgroundColor: AppColors.primaryColor,
-              child: IconButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(CartPage.routeName);
-                },
-                icon: const Icon(
-                  Icons.shopping_cart_checkout_sharp,
-                  color: AppColors.primaryColor,
-                  size: 23,
-                ),
-              ),
-            ),
-          ],
+          actions: const [CartWidget()],
         ),
         body: ListView(
           padding: EdgeInsets.zero,
@@ -169,6 +153,8 @@ class ProductsDetailsPage extends StatelessWidget {
               FirebaseFirestore.instance
                   .collection('cart')
                   .add({'productId': model.id, 'quantity': 1});
+              cartProv.getCartList();
+
               BotToast.showText(
                   text: 'Item added to cart', contentColor: Colors.green);
             }

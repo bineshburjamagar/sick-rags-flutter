@@ -14,6 +14,7 @@ class CartProvider extends ChangeNotifier {
           quantity: element.data()['quantity'],
         ),
       );
+      notifyListeners();
     }
   }
 }
