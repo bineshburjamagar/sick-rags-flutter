@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sick_rags_flutter/components/custom_button.dart';
 import 'package:sick_rags_flutter/config/config.dart';
 import 'package:sick_rags_flutter/core/providers/providers.dart';
+import 'package:sick_rags_flutter/screens/shop_page/products_list_page.dart';
 
 import '../../widgets/widgets.dart';
 
@@ -52,54 +54,92 @@ class CartPage extends StatelessWidget {
                 }, childCount: cartProv.cartList.length),
               ),
             ),
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 23.0),
-              sliver: SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        ...List.generate(
-                          50,
-                          (index) => const Expanded(
-                              child: Text(
-                            '-',
-                            style: TextStyle(color: Colors.grey),
-                          )),
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 20.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'TOTAL',
-                          style: TextStyle(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.greyColor,
+            if (cartProv.cartList.isNotEmpty)
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 23.0),
+                sliver: SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          ...List.generate(
+                            50,
+                            (index) => const Expanded(
+                                child: Text(
+                              '-',
+                              style: TextStyle(color: Colors.grey),
+                            )),
+                          )
+                        ],
+                      ),
+                      const SizedBox(height: 20.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'TOTAL',
+                            style: TextStyle(
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.greyColor,
+                            ),
                           ),
-                        ),
-                        Text(
-                          'Rs ${cartProv.getTotalPrice(cartProv.cartList)}',
-                          style: const TextStyle(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        )
-                      ],
-                    )
-                  ],
+                          Text(
+                            'Rs ${cartProv.getTotalPrice(cartProv.cartList)}',
+                            style: const TextStyle(
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ),
+              )
+            else
+              const SliverPadding(
+                padding: EdgeInsets.symmetric(vertical: 200),
+                sliver: SliverToBoxAdapter(
+                  child: Center(
+                      child: Text(
+                    'Your cart is empty :(',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: AppColors.greyColor,
+                    ),
+                  )),
+                ),
+              )
           ],
         ),
-        bottomNavigationBar: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 23.0, vertical: 20.0),
-          child: CustomButton(onPressed: () {}, label: 'Checkout'),
-        ),
+        bottomNavigationBar: cartProv.cartList.isNotEmpty
+            ? Container(
+                margin: const EdgeInsets.symmetric(
+                    horizontal: 23.0, vertical: 20.0),
+                child: CustomButton(
+                    onPressed: () async {
+                      await FirebaseFirestore.instance
+                          .collection('orders')
+                          .add({
+                        'orders':
+                            cartProv.cartList.map((e) => e.toJson()).toList()
+                      });
+                      await cartProv.deleteAllCart();
+                      await cartProv.getCartList();
+                    },
+                    label: 'Checkout'),
+              )
+            : Container(
+                margin: const EdgeInsets.symmetric(
+                    horizontal: 23.0, vertical: 20.0),
+                child: CustomButton(
+                    onPressed: () async {
+                      Navigator.of(context)
+                          .pushReplacementNamed(ProductsListPage.routeName);
+                    },
+                    label: 'Go Shopping'),
+              ),
       );
     });
   }

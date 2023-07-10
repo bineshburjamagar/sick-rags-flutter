@@ -28,6 +28,8 @@ class ProductModel {
       images: List<String>.from(json["images"].map((x) => x)),
       description: json["description"]);
 
+  get heroTag => "${isPopular ? "popular" : ""}${isRecent ? "Rec" : ""}$id";
+
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,

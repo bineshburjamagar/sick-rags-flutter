@@ -40,4 +40,18 @@ class CartProvider extends ChangeNotifier {
   decreaseQuantity(int q) {
     return q > 1 ? q-- : 1;
   }
+
+  Future<void> deleteAllCart() async {
+    final collection =
+        await FirebaseFirestore.instance.collection("cart").get();
+
+    final batch = FirebaseFirestore.instance.batch();
+
+    for (final doc in collection.docs) {
+      batch.delete(doc.reference);
+    }
+    notifyListeners();
+
+    return batch.commit();
+  }
 }

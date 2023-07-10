@@ -69,10 +69,9 @@ class CartProductCard extends StatelessWidget {
                             await FirebaseFirestore.instance
                                 .collection('cart')
                                 .doc(docId)
-                                .update({'quantity': quantity + 1});
-
-                            // log(gg..toString());
-
+                                .update(
+                              {'quantity': quantity + 1},
+                            );
                             await cartProve.getCartList();
                           },
                           child: Container(
@@ -105,11 +104,9 @@ class CartProductCard extends StatelessWidget {
                             await FirebaseFirestore.instance
                                 .collection('cart')
                                 .doc(docId)
-                                .update({
-                              'quantity': quantity > 1 ? quantity - 1 : 1
-                            });
-
-                            // log(gg..toString());
+                                .update(
+                              {'quantity': quantity > 1 ? quantity - 1 : 1},
+                            );
 
                             await cartProve.getCartList();
                           },
@@ -126,10 +123,19 @@ class CartProductCard extends StatelessWidget {
                           ),
                         ),
                         const Spacer(),
-                        const Icon(
-                          Icons.close,
-                          color: Colors.grey,
-                          size: 20.0,
+                        InkWell(
+                          onTap: () async {
+                            await FirebaseFirestore.instance
+                                .collection('cart')
+                                .doc(docId)
+                                .delete();
+                            await cartProve.getCartList();
+                          },
+                          child: const Icon(
+                            Icons.close,
+                            color: Colors.grey,
+                            size: 20.0,
+                          ),
                         ),
                       ],
                     ),

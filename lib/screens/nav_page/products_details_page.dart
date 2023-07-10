@@ -9,7 +9,10 @@ import '../../config/config.dart';
 import '../../widgets/widgets.dart';
 
 class ProductsDetailsPage extends StatelessWidget {
-  const ProductsDetailsPage({Key? key, required this.model}) : super(key: key);
+  const ProductsDetailsPage({
+    Key? key,
+    required this.model,
+  }) : super(key: key);
   static const String routeName = "/productsdetailspage";
   static Route route(ProductModel model) {
     return MaterialPageRoute(
@@ -48,6 +51,7 @@ class ProductsDetailsPage extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             CustomCarouselSlider(
+              heroTag: model.heroTag,
               images: model.images,
             ),
             Padding(

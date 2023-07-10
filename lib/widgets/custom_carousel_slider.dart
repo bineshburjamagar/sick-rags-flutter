@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import '../config/config.dart';
 
 class CustomCarouselSlider extends StatefulWidget {
-  const CustomCarouselSlider({super.key, required this.images});
+  const CustomCarouselSlider(
+      {super.key, required this.heroTag, required this.images});
   final List<dynamic> images;
-
+  final String heroTag;
   @override
   State<CustomCarouselSlider> createState() => _CustomCarouselSliderState();
 }
@@ -22,26 +23,17 @@ class _CustomCarouselSliderState extends State<CustomCarouselSlider> {
           items: [
             ...List.generate(
               widget.images.length,
-              (index) => index == 0
-                  ? Hero(
-                      tag: 'Hero$index',
-                      child: CachedNetworkImage(
-                        height: 350,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                        imageUrl: widget.images[index],
-                        errorWidget: (context, url, error) =>
-                            Image.asset(AssetPath.appLogo),
-                      ),
-                    )
-                  : CachedNetworkImage(
-                      height: 350,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                      imageUrl: widget.images[index],
-                      errorWidget: (context, url, error) =>
-                          Image.asset(AssetPath.appLogo),
-                    ),
+              (index) => Hero(
+                tag: widget.heroTag,
+                child: CachedNetworkImage(
+                  height: 350,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  imageUrl: widget.images[index],
+                  errorWidget: (context, url, error) =>
+                      Image.asset(AssetPath.appLogo),
+                ),
+              ),
             )
           ],
           options: CarouselOptions(

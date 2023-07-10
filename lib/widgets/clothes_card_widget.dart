@@ -10,15 +10,18 @@ class ClothesCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, ProductsDetailsPage.routeName,
-          arguments: model),
+      onTap: () => Navigator.pushNamed(
+        context,
+        ProductsDetailsPage.routeName,
+        arguments: model,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
               child: Hero(
-                tag: 'Hero0',
+                tag: '${model.id} ${model.name}',
                 child: CachedNetworkImage(
                   height: 200,
                   width: 150,
@@ -35,7 +38,7 @@ class ClothesCardWidget extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              model.name ?? "",
+              model.heroTag ?? "",
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
