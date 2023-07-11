@@ -37,6 +37,7 @@ class ProductModel {
         "available_size": List<dynamic>.from(availableSize.map((x) => x)),
         "is_popular": isPopular,
         "is_recent": isRecent,
+        "description": description,
         "images": List<dynamic>.from(images.map((x) => x)),
       };
 }
