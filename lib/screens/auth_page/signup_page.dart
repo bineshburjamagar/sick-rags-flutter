@@ -59,7 +59,7 @@ class _SignUpPageState extends State<SignUpPage> {
               child: Column(
                 children: [
                   const Text(
-                    'SICK RAGS',
+                    'SICK RAGS Apparel',
                     style: TextStyle(
                         fontSize: 18.0,
                         fontFamily: 'Caveat',

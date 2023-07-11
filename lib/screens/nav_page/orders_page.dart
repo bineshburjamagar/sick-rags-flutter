@@ -22,53 +22,65 @@ class OrdersPage extends StatelessWidget {
           ),
         ),
         body: SingleChildScrollView(
-          child: ListView.separated(
-            physics: const NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 23.0),
-            shrinkWrap: true,
-            separatorBuilder: (context, index) => const SizedBox(
-              height: 20.0,
-            ),
-            itemBuilder: (context, index) {
-              ProductModel productModel = prodProv.productsList
-                  .where((element) =>
-                      element.id == orderProv.orderList[index].productId)
-                  .first;
-              return Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.0),
-                    color: AppColors.borderColor),
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 10.0, vertical: 15.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(20.0),
-                      child: CachedNetworkImage(
-                        height: 100,
-                        width: 100,
-                        imageUrl: productModel.images.firstOrNull,
-                        errorWidget: (context, url, error) =>
-                            Image.asset(AssetPath.appLogo),
+          child: orderProv.orderList.isNotEmpty
+              ? ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(horizontal: 23.0),
+                  shrinkWrap: true,
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: 20.0,
+                  ),
+                  itemBuilder: (context, index) {
+                    ProductModel productModel = prodProv.productsList
+                        .where((element) =>
+                            element.id == orderProv.orderList[index].productId)
+                        .first;
+                    return Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: AppColors.borderColor),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10.0, vertical: 15.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(20.0),
+                            child: CachedNetworkImage(
+                              height: 100,
+                              width: 100,
+                              imageUrl: productModel.images.firstOrNull,
+                              errorWidget: (context, url, error) =>
+                                  Image.asset(AssetPath.appLogo),
+                            ),
+                          ),
+                          const SizedBox(width: 20.0),
+                          Expanded(
+                              child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('${productModel.name}'),
+                              Text('x ${orderProv.orderList[index].quantity}'),
+                              Text('Rs ${orderProv.orderList[index].price}')
+                            ],
+                          )),
+                        ],
                       ),
+                    );
+                  },
+                  itemCount: orderProv.orderList.length,
+                )
+              : const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 200),
+                  child: Center(
+                      child: Text(
+                    'Your orders is empty :(',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: AppColors.greyColor,
                     ),
-                    const SizedBox(width: 20.0),
-                    Expanded(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('${productModel.name}'),
-                        Text('x ${orderProv.orderList[index].quantity}'),
-                        Text('Rs ${orderProv.orderList[index].price}')
-                      ],
-                    )),
-                  ],
+                  )),
                 ),
-              );
-            },
-            itemCount: orderProv.orderList.length,
-          ),
         ),
       );
     });

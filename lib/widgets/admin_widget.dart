@@ -33,7 +33,8 @@ class AdminWidget extends StatelessWidget {
                 ),
                 CustomTextField(
                   labelText: 'Id',
-                  hintText: '${productProv.productsList.last.id + 1}',
+                  hintText:
+                      '${productProv.productsList.isNotEmpty ? productProv.productsList.last.id + 1 : ''}',
                   controller: adminProv.idController,
                   enable: false,
                 ),
@@ -194,12 +195,14 @@ class AdminWidget extends StatelessWidget {
 
                         productProv.database
                             .collection('products')
-                            .add(productData.toJson());
-                        adminProv.clearData();
-                        productProv.productsList.clear();
-                        FocusScope.of(context).unfocus();
-                        BotToast.showText(text: 'Product Added');
-                        productProv.getProductsData();
+                            .add(productData.toJson())
+                            .whenComplete(() {
+                          adminProv.clearData();
+                          productProv.productsList.clear();
+                          FocusScope.of(context).unfocus();
+                          BotToast.showText(text: 'Product Added');
+                          productProv.getProductsData();
+                        });
                       }
                     },
                     label: 'Add Products')

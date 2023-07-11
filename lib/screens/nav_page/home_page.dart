@@ -43,7 +43,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               title: const Text(
-                'SICK RAGS',
+                'SICK RAGS Apparel',
                 style: TextStyle(fontSize: 24.0, fontFamily: 'Caveat'),
               ),
               centerTitle: true,

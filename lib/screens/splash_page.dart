@@ -51,7 +51,7 @@ class _SplashPageState extends State<SplashPage> {
       backgroundColor: AppColors.primaryColor,
       body: Center(
         child: Text(
-          'SICK RAGS',
+          'SICK RAGS Apparel',
           style: TextStyle(
               fontSize: 20.0,
               fontFamily: 'Caveat',
