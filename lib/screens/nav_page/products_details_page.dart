@@ -150,66 +150,62 @@ class ProductsDetailsPage extends StatelessWidget {
         bottomNavigationBar: InkWell(
           onTap: () async {
             BotToast.showLoading();
-            var isOnCart = await prodProv.checkProductExists(model.id);
-            if (isOnCart) {
+
+            var currentCart = await FirebaseFirestore.instance
+                .collection("cart")
+                .where(
+                  "userId",
+                  isEqualTo: FirebaseAuth.instance.currentUser?.uid,
+                )
+                .get();
+
+            log("${currentCart.docs.firstOrNull?.id}");
+            if (currentCart.docs.isEmpty) {
+              FirebaseFirestore.instance.collection('cart').add({
+                "userId": FirebaseAuth.instance.currentUser?.uid,
+                "products": [
+                  {
+                    'productId': model.id,
+                    'quantity': 1,
+                    'price': model.price,
+                  }
+                ],
+              });
               BotToast.closeAllLoading();
               BotToast.showText(
-                  text: 'Already on cart', contentColor: Colors.red);
+                  text: 'Item added to cart', contentColor: Colors.green);
+              await cartProv.getCartList();
             } else {
-              BotToast.closeAllLoading();
-
-              var currentCart = await FirebaseFirestore.instance
-                  .collection("cart")
-                  .where(
-                    "userId",
-                    isEqualTo: FirebaseAuth.instance.currentUser?.uid,
-                  )
-                  .get();
-
-              log("${currentCart.docs.firstOrNull?.id}");
-              if (currentCart.docs.isEmpty) {
-                FirebaseFirestore.instance.collection('cart').add({
-                  "userId": FirebaseAuth.instance.currentUser?.uid,
+              var products =
+                  currentCart.docs.expand((e) => e["products"]).toList();
+              log("$products");
+              if (products
+                  .where((element) => element['productId'] == model.id)
+                  .isNotEmpty) {
+                BotToast.closeAllLoading();
+                BotToast.showText(
+                    text: 'Already on cart', contentColor: Colors.red);
+              } else {
+                var updateData = {
                   "products": [
+                    ...products,
                     {
                       'productId': model.id,
                       'quantity': 1,
                       'price': model.price,
                     }
                   ],
-                });
-              } else {
-                var products =
-                    currentCart.docs.expand((e) => e["products"]).toList();
-                log("$products");
-                if (products
-                    .where((element) => element['productId'] == model.id)
-                    .isNotEmpty) {
-                  BotToast.showText(
-                      text: 'Already on cart', contentColor: Colors.red);
-                } else {
-                  var updateData = {
-                    "products": [
-                      ...products,
-                      {
-                        'productId': model.id,
-                        'quantity': 1,
-                        'price': model.price,
-                      }
-                    ],
-                  };
-                  log("$updateData");
-                  FirebaseFirestore.instance
-                      .collection('cart')
-                      .doc(currentCart.docs.firstOrNull?.id)
-                      .update(updateData);
-
-                  BotToast.showText(
-                      text: 'Item added to cart', contentColor: Colors.green);
-                }
+                };
+                log("$updateData");
+                FirebaseFirestore.instance
+                    .collection('cart')
+                    .doc(currentCart.docs.firstOrNull?.id)
+                    .update(updateData);
+                BotToast.closeAllLoading();
+                BotToast.showText(
+                    text: 'Item added to cart', contentColor: Colors.green);
+                await cartProv.getCartList();
               }
-
-              await cartProv.getCartList();
             }
           },
           child: Container(

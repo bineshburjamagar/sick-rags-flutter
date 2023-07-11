@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -119,6 +120,7 @@ class CartPage extends StatelessWidget {
                     horizontal: 23.0, vertical: 20.0),
                 child: CustomButton(
                     onPressed: () async {
+                      BotToast.showLoading();
                       await FirebaseFirestore.instance
                           .collection('orders')
                           .add({
@@ -126,6 +128,11 @@ class CartPage extends StatelessWidget {
                         'orders':
                             cartProv.cartList.map((e) => e.toJson()).toList()
                       });
+                      BotToast.closeAllLoading();
+                      BotToast.showText(
+                        text: 'Your order has been placed',
+                        contentColor: Colors.green,
+                      );
                       await cartProv.deleteAllCart();
                       await cartProv.getCartList();
                       await orderProv.getOrders();
