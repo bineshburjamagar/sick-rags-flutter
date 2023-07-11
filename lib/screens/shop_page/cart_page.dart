@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sick_rags_flutter/components/custom_button.dart';
@@ -45,7 +46,6 @@ class CartPage extends StatelessWidget {
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate((context, index) {
                   return CartProductCard(
-                      docId: cartProv.cartList[index].docId,
                       quantity: cartProv.cartList[index].quantity,
                       productModel: prodProv.productsList
                           .where((element) =>
@@ -122,6 +122,7 @@ class CartPage extends StatelessWidget {
                       await FirebaseFirestore.instance
                           .collection('orders')
                           .add({
+                        'userId': FirebaseAuth.instance.currentUser?.uid,
                         'orders':
                             cartProv.cartList.map((e) => e.toJson()).toList()
                       });

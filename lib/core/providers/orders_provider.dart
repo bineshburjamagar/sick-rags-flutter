@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sick_rags_flutter/core/models/orders_model.dart';
 
@@ -8,7 +9,10 @@ class OrdersProvider extends ChangeNotifier {
   List<OrdersModel> orderList = [];
 
   getOrders() async {
-    var data = await FirebaseFirestore.instance.collection('orders').get();
+    var data = await FirebaseFirestore.instance
+        .collection('orders')
+        .where('userId', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+        .get();
     for (var element in data.docs) {
       log(element.data()['orders'].toString());
 

@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sick_rags_flutter/core/models/models.dart';
@@ -154,17 +157,59 @@ class ProductsDetailsPage extends StatelessWidget {
                   text: 'Already on cart', contentColor: Colors.red);
             } else {
               BotToast.closeAllLoading();
-              FirebaseFirestore.instance.collection('cart').add(
-                {
-                  'productId': model.id,
-                  'quantity': 1,
-                  'price': model.price,
-                },
-              );
-              await cartProv.getCartList();
 
-              BotToast.showText(
-                  text: 'Item added to cart', contentColor: Colors.green);
+              var currentCart = await FirebaseFirestore.instance
+                  .collection("cart")
+                  .where(
+                    "userId",
+                    isEqualTo: FirebaseAuth.instance.currentUser?.uid,
+                  )
+                  .get();
+
+              log("${currentCart.docs.firstOrNull?.id}");
+              if (currentCart.docs.isEmpty) {
+                FirebaseFirestore.instance.collection('cart').add({
+                  "userId": FirebaseAuth.instance.currentUser?.uid,
+                  "products": [
+                    {
+                      'productId': model.id,
+                      'quantity': 1,
+                      'price': model.price,
+                    }
+                  ],
+                });
+              } else {
+                var products =
+                    currentCart.docs.expand((e) => e["products"]).toList();
+                log("$products");
+                if (products
+                    .where((element) => element['productId'] == model.id)
+                    .isNotEmpty) {
+                  BotToast.showText(
+                      text: 'Already on cart', contentColor: Colors.red);
+                } else {
+                  var updateData = {
+                    "products": [
+                      ...products,
+                      {
+                        'productId': model.id,
+                        'quantity': 1,
+                        'price': model.price,
+                      }
+                    ],
+                  };
+                  log("$updateData");
+                  FirebaseFirestore.instance
+                      .collection('cart')
+                      .doc(currentCart.docs.firstOrNull?.id)
+                      .update(updateData);
+
+                  BotToast.showText(
+                      text: 'Item added to cart', contentColor: Colors.green);
+                }
+              }
+
+              await cartProv.getCartList();
             }
           },
           child: Container(

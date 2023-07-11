@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sick_rags_flutter/core/models/models.dart';
@@ -12,11 +15,10 @@ class CartProductCard extends StatelessWidget {
     super.key,
     required this.productModel,
     required this.quantity,
-    required this.docId,
   });
   final ProductModel productModel;
   final int quantity;
-  final String docId;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<CartProvider>(builder: (context, cartProve, child) {
@@ -65,15 +67,11 @@ class CartProductCard extends StatelessWidget {
                     Row(
                       children: [
                         InkWell(
-                          onTap: () async {
-                            await FirebaseFirestore.instance
-                                .collection('cart')
-                                .doc(docId)
-                                .update(
-                              {'quantity': quantity + 1},
-                            );
-                            await cartProve.getCartList();
-                          },
+                          onTap: () => updateQuantity(
+                              isIncrease: true,
+                              lastCall: () async {
+                                await cartProve.getCartList();
+                              }),
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5.0),
@@ -100,16 +98,11 @@ class CartProductCard extends StatelessWidget {
                           width: 10.0,
                         ),
                         InkWell(
-                          onTap: () async {
-                            await FirebaseFirestore.instance
-                                .collection('cart')
-                                .doc(docId)
-                                .update(
-                              {'quantity': quantity > 1 ? quantity - 1 : 1},
-                            );
-
-                            await cartProve.getCartList();
-                          },
+                          onTap: () => updateQuantity(
+                              isIncrease: false,
+                              lastCall: () async {
+                                await cartProve.getCartList();
+                              }),
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5.0),
@@ -125,11 +118,44 @@ class CartProductCard extends StatelessWidget {
                         const Spacer(),
                         InkWell(
                           onTap: () async {
-                            await FirebaseFirestore.instance
-                                .collection('cart')
-                                .doc(docId)
-                                .delete();
+                            var currentCart = await FirebaseFirestore.instance
+                                .collection("cart")
+                                .where(
+                                  "userId",
+                                  isEqualTo:
+                                      FirebaseAuth.instance.currentUser?.uid,
+                                )
+                                .get();
+
+                            var products = currentCart.docs
+                                .expand((e) => e["products"])
+                                .toList();
+
+                            log("Original $products");
+
+                            if (products.length <= 1) {
+                              FirebaseFirestore.instance
+                                  .collection('cart')
+                                  .doc(currentCart.docs.firstOrNull?.id)
+                                  .delete();
+                            } else {
+                              products.removeWhere((element) =>
+                                  element["productId"] == productModel.id);
+
+                              log("$products");
+
+                              var updateData = {
+                                "products": [...products],
+                              };
+
+                              FirebaseFirestore.instance
+                                  .collection('cart')
+                                  .doc(currentCart.docs.firstOrNull?.id)
+                                  .update(updateData);
+                            }
+
                             await cartProve.getCartList();
+                            // }
                           },
                           child: const Icon(
                             Icons.close,
@@ -147,5 +173,40 @@ class CartProductCard extends StatelessWidget {
         ),
       );
     });
+  }
+
+  updateQuantity(
+      {required bool isIncrease, required VoidCallback lastCall}) async {
+    var currentCart = await FirebaseFirestore.instance
+        .collection("cart")
+        .where(
+          "userId",
+          isEqualTo: FirebaseAuth.instance.currentUser?.uid,
+        )
+        .get();
+
+    var products = currentCart.docs.expand((e) => e["products"]).toList();
+
+    for (var element in products) {
+      if (element["productId"] == productModel.id) {
+        if (isIncrease) {
+          element["quantity"] = quantity + 1;
+        } else {
+          if (quantity > 1) {
+            element["quantity"] = quantity - 1;
+          }
+        }
+      }
+    }
+
+    var updateData = {
+      "products": [...products],
+    };
+
+    FirebaseFirestore.instance
+        .collection('cart')
+        .doc(currentCart.docs.firstOrNull?.id)
+        .update(updateData);
+    lastCall.call();
   }
 }

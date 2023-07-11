@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sick_rags_flutter/core/models/models.dart';
 
@@ -7,17 +8,21 @@ class CartProvider extends ChangeNotifier {
 
   getCartList() async {
     cartList.clear();
-    var data = await FirebaseFirestore.instance.collection('cart').get();
-    for (var element in data.docs) {
-      cartList.add(
-        CartModel(
-          docId: element.id,
-          productId: element.data()['productId'],
-          quantity: element.data()['quantity'],
-          price: element.data()['price'],
-        ),
-      );
+    var data = await FirebaseFirestore.instance
+        .collection('cart')
+        .where(
+          'userId',
+          isEqualTo: FirebaseAuth.instance.currentUser?.uid,
+        )
+        .get();
+
+    var dd = data.docs.firstOrNull;
+
+    if (dd != null) {
+      cartList = CartModelMeta.fromJson(dd.data()).cartList;
+      notifyListeners();
     }
+
     getTotalPrice(cartList);
 
     notifyListeners();
@@ -42,16 +47,17 @@ class CartProvider extends ChangeNotifier {
   }
 
   Future<void> deleteAllCart() async {
-    final collection =
-        await FirebaseFirestore.instance.collection("cart").get();
+    var currentCart = await FirebaseFirestore.instance
+        .collection("cart")
+        .where(
+          "userId",
+          isEqualTo: FirebaseAuth.instance.currentUser?.uid,
+        )
+        .get();
 
-    final batch = FirebaseFirestore.instance.batch();
-
-    for (final doc in collection.docs) {
-      batch.delete(doc.reference);
-    }
-    notifyListeners();
-
-    return batch.commit();
+    FirebaseFirestore.instance
+        .collection('cart')
+        .doc(currentCart.docs.firstOrNull?.id)
+        .delete();
   }
 }
